@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Bootstrap alpha v4 -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+        <!-- CSS ACM -->
+        <link rel="stylesheet" type="text/css" href="{% static 'instagram/css/general.css' %}" >
+        <link rel="stylesheet" type="text/css" href="{% static 'instagram/css/profile.css' %}" >
+
+        <!-- Material Icon -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <title>
+            Instagram
+        </title>
+    </head>
+    <body>
+         <ul class="nav nav-pills nav-justified">
+          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'mainPage' curr_user.id %}">home</a></li>
+          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'search' curr_user.id %}">search</a></li>
+          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'uploadPhoto' curr_user.id %}">photo_camera</a></li>
+          <li  class="nav-item material-icons active"><a class="nav-link"  href="#">favorite</a></li>
+          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'profile' curr_user.id %}">account_circle</a></li>
+        </ul>
+        <br>
+        <form action="{% url 'search' curr_user.id %}" method='POST'>
+            {% csrf_token %}
+            <div class="input-group row justify-content-md-center">
+                <span class="input-group-addon" id="button_search"><i class="material-icons">search</i></span>
+                <input type="text" class="form-control col col-lg-3" placeholder="Buscar" id="search" name = "query">
+            </div>
+        </form>
+        {% if user_list %}
+            {% for i in user_list %}
+                <form action="{% url 'follow' %}" method='POST'>
+                    {% csrf_token %}
+                    <input type="hidden" name="id_follow" value= "{{i.id}}">
+                    <input type="hidden" name="curr_user" value= "{{curr_user.id}}">
+                    <section class="profile">
+                        <section class="imagen">
+                            <picture><img src="{{ i.photo|default_if_none:"/static/instagram/media/default" }}" class ="img-profile"/></picture>
+                        </section>
+                        <section class="info">
+                            <section class="username">
+                                <h1 class="title"><a href="{% url 'profile' i.id %}">{{ i.nickname }}</a></h1>
+                                <button class="btn">Seguir</button>
+                            </section>
+                            <section class="profile_details">
+                                <section class="profile_name">
+                                    <p>{{ i.name }}</p>
+                                </section>
+                                <section class="profile_description">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis autem inventore illum, nisi natus aut.</p>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                </form>
+            {% endfor %}
+        {%endif%}
+
+        <!-- JS Bootstrap v4 -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+        <!-- JS ACM -->
+        <script src="{% static 'instagram/js/search.js' %}"></script>
+    </body>
+</html>

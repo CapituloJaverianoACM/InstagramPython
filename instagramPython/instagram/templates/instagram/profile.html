@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Bootstrap alpha v4 -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+        <!-- CSS ACM -->
+        <link rel="stylesheet" type="text/css" href="{% static 'instagram/css/general.css' %}" >
+        <link rel="stylesheet" type="text/css" href="{% static 'instagram/css/profile.css' %}" >
+
+        <!-- Material Icon -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <title>
+            Instagram
+        </title>
+    </head>
+    <body>
+        <ul class="nav nav-pills nav-justified">
+          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'mainPage' curr_user.id %}">home</a></li>
+          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'search' curr_user.id %}">search</a></li>
+          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'uploadPhoto' curr_user.id %}">photo_camera</a></li>
+          <li  class="nav-item material-icons active"><a class="nav-link"  href="#">favorite</a></li>
+          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'profile' curr_user.id %}">account_circle</a></li>
+        </ul>
+        <section class="profile">
+            <section class="imagen">
+                <picture><img src="{{ curr_user.photo|default_if_none:"/static/instagram/media/default" }}" class ="img-profile"/></picture>
+            </section>
+            <section class="info">
+                <section class="username">
+                    <h1 class="title">{{ curr_user.nickname }}</h1>
+                    <button class="btn">Editar perfil</button>
+                    <button class="btn dots">•••</button>
+                </section>
+                <section class="follow_Info">
+                    <section class="follower_Info">
+                        <p>{{ media_user|length }} publicaciones </p>
+                    </section>
+                    <section class="follower_Info">
+                        <p>57 seguidores</p>
+                    </section>
+                    <section class="follower_Info">
+                        <p>75 seguidos</p>
+                    </section>
+                </section>
+                <section class="profile_details">
+                    <section class="profile_name">
+                        <p>{{ curr_user.name }}</p>
+                    </section>
+                   <section class="profile_description">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis autem inventore illum, nisi natus aut.</p>
+                    </section>
+                </section>
+            </section>
+        </section>
+        <center>
+            <div class= "container">
+                <div class= "item">
+                    {% if media_user %}
+                        {% for i in media_user %}
+                         <img src="{% static 'instagram/' %}{{i.photo}}" class ="img-profile"/>
+                        {% endfor %}
+                    {% else %}
+                        No tienes publicaciones
+                    {%endif%}
+                </div>
+            </div>
+        </center>
+    </body>
+</html>
