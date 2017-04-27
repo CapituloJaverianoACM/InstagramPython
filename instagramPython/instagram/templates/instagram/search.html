@@ -41,7 +41,7 @@
                       <input type="hidden" name="curr_user" value= "{{curr_user.id}}">
                       <section class="profile">
                           <section class="imagen">
-                              <picture><img src="{{ i.photo|default_if_none:"/static/instagram/media/default" }}" class ="img-profile"/></picture>
+                              <picture><img src="{{ i.myuser.photo|default_if_none:"/static/instagram/media/default" }}" class ="img-profile"/></picture>
                           </section>
                           <section class="info">
                               <section class="username">

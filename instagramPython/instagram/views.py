@@ -2,10 +2,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import render,redirect
-from instagram.models import Post
+from instagram.models import Post,MyUser
 from django.core.files.storage import FileSystemStorage
 
 def index(request):
+    if request.user.is_authenticated:
+        return redirect('mainPage')
     return render(request, 'instagram/index.html')
 
 def createUser(request):
@@ -13,7 +15,10 @@ def createUser(request):
     curr_name = request.POST['name']
     curr_nickName = request.POST['nickName']
     curr_password = request.POST['password']
+    myuser_object = MyUser()
     user_object = User.objects.create_user(first_name=curr_name, username = curr_nickName, password = curr_password, email = curr_email)
+    myuser = MyUser( user = user_object )
+    myuser.save()
     user_object.save()
     return redirect('login')
 
@@ -34,7 +39,7 @@ def profile(request):
     curr_user = request.user
     media_user = Post.objects.filter( user_id = curr_user.id );
     #seguidores =
-    context = { 'curr_user' : curr_user, 'media_user' : media_user }  # Comillas es el nombre en el HTML, variable
+    context = { 'curr_user' : curr_user, 'media_user' : media_user }
     return render(request, 'instagram/profile.html', context)
 
 @login_required
@@ -48,14 +53,14 @@ def uploadFile(request):
     curr_user = request.user
     post_user = Post.objects.filter(user_id=curr_user.id).count();
     mediaFile = request.FILES[ 'photo' ];
-    newNameFile = curr_user.nickname + "-" + id_user + "-" + str(post_user);
+    newNameFile = curr_user.username + "-" + str(curr_user.id) + "-" + str(post_user);
     fs = FileSystemStorage()
     filename = fs.save(newNameFile, mediaFile)
     uploaded_file_url = fs.url(filename)
     photo = uploaded_file_url;
     description = request.POST[ 'description' ];
     newPost = Post( photo = photo, description = description, user_id = curr_user );
-    #newPost.save();
+    newPost.save();
     media_user = Post.objects.filter( user_id = curr_user.id );
     context = { 'curr_user' : curr_user, 'media_user' : media_user }
     return render(request, 'instagram/profile.html', context)

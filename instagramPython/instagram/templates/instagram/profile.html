@@ -29,11 +29,11 @@
         </ul>
         <section class="profile">
             <section class="imagen">
-                <picture><img src="{{ curr_user.photo|default_if_none:"/static/instagram/media/default" }}" class ="img-profile"/></picture>
+                <picture><img src="{{ curr_user.myuser.photo|default_if_none:"/static/instagram/media/default" }}" class ="img-profile"/></picture>
             </section>
             <section class="info">
                 <section class="username">
-                    <h1 class="title">{{ curr_user.nickname }}</h1>
+                    <h1 class="title">{{ curr_user.username }}</h1>
                     <button class="btn">Editar perfil</button>
                     <!--<button class="btn dots">•••</button>-->
                     <a class="btn dots" href="{% url 'logout' %}">•••</a>
@@ -51,7 +51,7 @@
                 </section>
                 <section class="profile_details">
                     <section class="profile_name">
-                        <p>{{ curr_user.name }}</p>
+                        <p>{{ curr_user.first_name }}</p>
                     </section>
                    <section class="profile_description">
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis autem inventore illum, nisi natus aut.</p>

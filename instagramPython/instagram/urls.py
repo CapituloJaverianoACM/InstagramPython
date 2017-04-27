@@ -5,7 +5,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name = 'index'),
-    url(r'^login/$', auth_views.LoginView.as_view(template_name='instagram/login.html'), name= 'login'),
+    url(r'^login/$', auth_views.LoginView.as_view(template_name='instagram/login.html',redirect_authenticated_user=True), name= 'login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name='instagram/index.html'), name= 'logout'),
     url(r'^createUser', views.createUser),
     url(r'^mainPage/$', views.mainPage, name = 'mainPage'),

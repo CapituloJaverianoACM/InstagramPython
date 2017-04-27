@@ -28,9 +28,9 @@ class Post(models.Model):
 
 class Comment(models.Model):
     text = models.CharField(max_length=100)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 class Like(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
