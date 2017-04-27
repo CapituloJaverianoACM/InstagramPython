@@ -1,15 +1,17 @@
 from django.conf.urls import url
+from django.contrib.auth import views as auth_views
 
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.index),
-    url(r'^login', views.login, name = 'login'),
+    url(r'^$', views.index, name = 'index'),
+    url(r'^login/$', auth_views.LoginView.as_view(template_name='instagram/login.html'), name= 'login'),
+    url(r'^logout/$', auth_views.LogoutView.as_view(template_name='instagram/index.html'), name= 'logout'),
     url(r'^createUser', views.createUser),
-    url(r'^mainPage/(?P<id_user>\d+)/$', views.mainPage, name = 'mainPage'),
-    url(r'^profile/(?P<id_user>\d+)/$', views.profile, name = 'profile'),
-    url(r'^uploadPhoto/(?P<id_user>\d+)/$', views.uploadPhoto, name = 'uploadPhoto'),
-    url(r'^uploadFile/(?P<id_user>\d+)/$', views.uploadFile, name = 'uploadFile'),
-    url(r'^search/(?P<id_user>\d+)/$', views.search, name = 'search'),
+    url(r'^mainPage/$', views.mainPage, name = 'mainPage'),
+    url(r'^profile/$', views.profile, name = 'profile'),
+    url(r'^uploadPhoto/$', views.uploadPhoto, name = 'uploadPhoto'),
+    url(r'^uploadFile/$', views.uploadFile, name = 'uploadFile'),
+    url(r'^search/$', views.search, name = 'search'),
     url(r'^follow/$', views.follow, name = 'follow'),
 ]

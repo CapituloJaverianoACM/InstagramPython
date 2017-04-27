@@ -25,8 +25,9 @@ SECRET_KEY = 'y_szt5_^h4wq!$)(fp1d4otb!5dha$byxs(jre$-)k^(h2s#is'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [  
+ALLOWED_HOSTS = [
         'juanpablorn30.pythonanywhere.com',
+        '127.0.0.1',
 ]
 
 
@@ -127,3 +128,8 @@ STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 #Archivos multimedia.
 MEDIA_ROOT = os.path.join(BASE_DIR, 'instagram/static/instagram/media')
 MEDIA_URL = '/media/'
+
+#Auth config
+LOGIN_URL = 'index'
+LOGIN_REDIRECT_URL = 'mainPage'
+LOGOUT_REDIRECT_URL = 'mainPage'
