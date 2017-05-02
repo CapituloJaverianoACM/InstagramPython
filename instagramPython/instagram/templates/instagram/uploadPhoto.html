@@ -23,7 +23,7 @@
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'search' %}">search</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'uploadPhoto' %}">photo_camera</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link"  href="#">favorite</a></li>
-          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'profile' %}">account_circle</a></li>
+          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'profile' curr_user.username %}">account_circle</a></li>
         </ul>
         <br>
         <center>

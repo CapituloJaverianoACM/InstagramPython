@@ -25,7 +25,7 @@
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'search' %}">search</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'uploadPhoto' %}">photo_camera</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link"  href="#">favorite</a></li>
-          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'profile' %}">account_circle</a></li>
+          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'profile' register_user.username%}">account_circle</a></li>
         </ul>
         <section class="profile">
             <section class="imagen">
@@ -34,19 +34,23 @@
             <section class="info">
                 <section class="username">
                     <h1 class="title">{{ curr_user.username }}</h1>
-                    <button class="btn">Editar perfil</button>
-                    <!--<button class="btn dots">•••</button>-->
-                    <a class="btn dots" href="{% url 'logout' %}">•••</a>
+                    {% if curr_user.username == register_user.username %}
+                      <button class="btn">Editar perfil</button>
+                      <!--<button class="btn dots">•••</button>-->
+                      <a class="btn dots" href="{% url 'logout' %}">•••</a>
+                    {% else %}
+                    <a class="btn" href="{% url 'follow' curr_user.username %}" >Seguir</a>
+                    {% endif %}
                 </section>
                 <section class="follow_Info">
                     <section class="follower_Info">
                         <p>{{ media_user|length }} publicaciones </p>
                     </section>
                     <section class="follower_Info">
-                        <p>57 seguidores</p>
+                        <p>{{followers_number}} seguidores</p>
                     </section>
                     <section class="follower_Info">
-                        <p>75 seguidos</p>
+                        <p>{{follow_number}} seguidos</p>
                     </section>
                 </section>
                 <section class="profile_details">

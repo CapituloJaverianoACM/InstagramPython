@@ -22,7 +22,7 @@
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'search' %}">search</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'uploadPhoto' %}">photo_camera</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link"  href="#">favorite</a></li>
-          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'profile' %}">account_circle</a></li>
+          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'profile' curr_user.username %}">account_circle</a></li>
         </ul>
         <br>
         <form action="{% url 'search' %}" method='POST'>
@@ -35,7 +35,7 @@
         {% if user_list %}
             {% for i in user_list %}
                 {% if i.id != curr_user.id %}
-                  <form action="{% url 'follow' %}" method='POST'>
+                  <form action="{% url 'basura' %}" method='POST'>
                       {% csrf_token %}
                       <input type="hidden" name="id_follow" value= "{{i.id}}">
                       <input type="hidden" name="curr_user" value= "{{curr_user.id}}">
@@ -45,7 +45,7 @@
                           </section>
                           <section class="info">
                               <section class="username">
-                                  <h1 class="title"><a href="{% url 'profile' %}">{{ i.username }}</a></h1>
+                                  <h1 class="title"><a href="{% url 'profile' i.username %}">{{ i.username }}</a></h1>
                                   <button class="btn">Seguir</button>
                               </section>
                               <section class="profile_details">

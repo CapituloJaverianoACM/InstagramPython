@@ -109,7 +109,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+#TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Guayaquil'
 
 USE_I18N = True
 
@@ -132,4 +133,4 @@ MEDIA_URL = '/media/'
 #Auth config
 LOGIN_URL = 'index'
 LOGIN_REDIRECT_URL = 'mainPage'
-LOGOUT_REDIRECT_URL = 'mainPage'
+LOGOUT_REDIRECT_URL = 'index'

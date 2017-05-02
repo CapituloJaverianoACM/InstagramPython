@@ -9,9 +9,9 @@ urlpatterns = [
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name='instagram/index.html'), name= 'logout'),
     url(r'^createUser', views.createUser),
     url(r'^mainPage/$', views.mainPage, name = 'mainPage'),
-    url(r'^profile/$', views.profile, name = 'profile'),
+    url(r'^profile/(?P<_username>[\w-]+)/$', views.profile, name = 'profile'),
     url(r'^uploadPhoto/$', views.uploadPhoto, name = 'uploadPhoto'),
     url(r'^uploadFile/$', views.uploadFile, name = 'uploadFile'),
     url(r'^search/$', views.search, name = 'search'),
-    url(r'^follow/$', views.follow, name = 'follow'),
+    url(r'^follow/(?P<_username>[\w-]+)/$', views.follow, name = 'follow'),
 ]

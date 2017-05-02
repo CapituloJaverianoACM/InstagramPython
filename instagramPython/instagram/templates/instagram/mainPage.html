@@ -10,6 +10,7 @@
 
         <!-- CSS ACM -->
         <link rel="stylesheet" type="text/css" href="{% static 'instagram/css/general.css' %}" >
+        <link rel="stylesheet" type="text/css" href="{% static 'instagram/css/mainPage.css' %}" >
 
         <!-- Material Icon -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -24,28 +25,33 @@
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'search' %}">search</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'uploadPhoto' %}">photo_camera</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link"  href="#">favorite</a></li>
-          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'profile' %}">account_circle</a></li>
+          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'profile' curr_user.username %}">account_circle</a></li>
         </ul>
         <center>
-            <div class="card" style="width: 20rem;">
-              <div class="card-header">
-                Nombre usuario
-                hace cuanto se publico
-              </div>
-
-              <img class="card-img-top" src="{% static 'instagram/media/JuanPabloRN30-2-' %}" alt="Card image cap" >
-              <div class="card-block">
-                <h4 class="card-title"># Me gusta</h4>
-                <h4 class="card-title">Nombre Usuario - Descripcion</h4>
-                <!-- Si hay comentarios, mostrarlos -->
-              </div>
-              <div class="card-footer text-muted">
-                <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon1"><i class="material-icons"><a href="#">favorite_border</a></i></span>
-                  <input type="text" class="form-control" placeholder="Añade un comentario..." aria-describedby="basic-addon1">
+          {% if photo_list %}
+            {% for current in photo_list %}
+              <div class="card">
+                <div class="card-header">
+                  {{ current.user_id.username }}
+                  {{ current.time}}
+                </div>
+                <img class="card-img-top" src="{% static 'instagram/' %}{{current.photo}}" class="image">
+                <div class="card-block">
+                  <h4 class="card-title"># Me gusta</h4>
+                  <h4 class="card-title">Nombre Usuario - Descripcion</h4>
+                  <!-- Si hay comentarios, mostrarlos -->
+                </div>
+                <div class="card-footer text-muted">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="material-icons"><a href="#">favorite_border</a></i></span>
+                    <input type="text" class="form-control" placeholder="Añade un comentario..." aria-describedby="basic-addon1">
+                  </div>
                 </div>
               </div>
-            </div>
+            {% endfor %}
+          {% else %}
+            No hay publicaciones
+          {% endif %}
         </center>
     </body>
 

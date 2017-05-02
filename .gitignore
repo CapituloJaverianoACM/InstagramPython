@@ -16,6 +16,7 @@ myvenv
 instagramPython/instagramPython/static/
 db.sqlite3
 .DS_Store
+sql*
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
