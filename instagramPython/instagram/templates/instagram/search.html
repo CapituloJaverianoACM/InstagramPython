@@ -35,7 +35,7 @@
         {% if user_list %}
             {% for i in user_list %}
                 {% if i.id != curr_user.id %}
-                  <form action="{% url 'basura' %}" method='POST'>
+                  <form action="{% url 'search' %}" method='POST'>
                       {% csrf_token %}
                       <input type="hidden" name="id_follow" value= "{{i.id}}">
                       <input type="hidden" name="curr_user" value= "{{curr_user.id}}">
