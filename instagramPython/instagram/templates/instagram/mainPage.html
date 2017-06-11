@@ -23,7 +23,7 @@
         <ul class="nav nav-pills nav-justified">
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'mainPage' %}">home</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'search' %}">search</a></li>
-          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'uploadPhoto' %}">photo_camera</a></li>
+          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'uploadFile' %}">photo_camera</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link"  href="#">favorite</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'profile' curr_user.username %}">account_circle</a></li>
         </ul>
@@ -32,13 +32,16 @@
             {% for current in photo_list %}
               <div class="card">
                 <div class="card-header">
-                  {{ current.user_id.username }}
-                  {{ current.time}}
+                  <img class="img-header" src="{% static 'instagram/media/profile/' %}{{curr_user.myuser.photo|default_if_none:'default' }}">
+                  <a class="a-profile" href="{% url 'profile' current.user_id.username %}">{{ current.user_id.username }}</a>
                 </div>
-                <img class="card-img-top" src="{% static 'instagram/' %}{{current.photo}}" class="image">
+                <img src="{% static 'instagram/' %}{{current.photo}}" class="image">
                 <div class="card-block">
                   <h4 class="card-title"># Me gusta</h4>
-                  <h4 class="card-title">Nombre Usuario - Descripcion</h4>
+                  <p class="card-title">
+                    <a class="a-profile" href="{% url 'profile' current.user_id.username %}">{{ current.user_id.username }}</a>
+                    {{ current.description }}
+                  </p>
                   <!-- Si hay comentarios, mostrarlos -->
                 </div>
                 <div class="card-footer text-muted">
@@ -50,7 +53,7 @@
               </div>
             {% endfor %}
           {% else %}
-            No hay publicaciones
+            <p>No hay publicaciones</p>
           {% endif %}
         </center>
     </body>

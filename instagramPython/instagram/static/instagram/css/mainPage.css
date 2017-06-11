@@ -1,3 +1,18 @@
 .card{
   width: 50%;
 }
+
+.img-header{
+  border-radius: 50%;
+  height: auto;
+  width: 5%;
+}
+
+.a-profile{
+  color: black;
+  font-weight: bold;
+}
+
+.card > .image{
+  width: 100%;
+}

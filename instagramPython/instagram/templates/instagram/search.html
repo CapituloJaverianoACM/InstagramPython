@@ -20,7 +20,7 @@
          <ul class="nav nav-pills nav-justified">
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'mainPage' %}">home</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'search' %}">search</a></li>
-          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'uploadPhoto' %}">photo_camera</a></li>
+          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'uploadFile' %}">photo_camera</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link"  href="#">favorite</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'profile' curr_user.username %}">account_circle</a></li>
         </ul>
@@ -46,7 +46,7 @@
                           <section class="info">
                               <section class="username">
                                   <h1 class="title"><a href="{% url 'profile' i.username %}">{{ i.username }}</a></h1>
-                                  <button class="btn">Seguir</button>
+                                  <a class="btn" href="{% url 'follow' i.username %}" >Seguir</a>
                               </section>
                               <section class="profile_details">
                                   <section class="profile_name">

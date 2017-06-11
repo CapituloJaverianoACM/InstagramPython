@@ -1,8 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import render,redirect
-from instagram.models import Post,MyUser,Follow
+from instagram.models import *
 from django.core.files.storage import FileSystemStorage
 
 def index(request):
@@ -29,11 +28,8 @@ def mainPage(request):
     for user_aux in Follow.objects.filter( from_id = curr_user.myuser ):
         search_user = MyUser.objects.get( pk = user_aux.to_id.id )
         post_aux = Post.objects.filter(user_id=search_user.user.id)
-        if not post_aux:
-            print ("No hay nada")
-        else:
+        if post_aux:
             for photo_aux in post_aux:
-                print (photo_aux.user_id.username)
                 photo_list.append( photo_aux );
     context = { 'curr_user' : curr_user, 'photo_list' : photo_list }
     return render(request, 'instagram/mainPage.html', context)
@@ -49,27 +45,23 @@ def profile(request, _username):
     return render(request, 'instagram/profile.html', context)
 
 @login_required
-def uploadPhoto(request):
-    curr_user = request.user
-    context = { 'curr_user' : curr_user }
-    return render(request, 'instagram/uploadPhoto.html', context)
-
-@login_required
 def uploadFile(request):
     curr_user = request.user
-    post_user = Post.objects.filter(user_id=curr_user.id).count();
-    mediaFile = request.FILES[ 'photo' ];
-    newNameFile = curr_user.username + "-" + str(curr_user.id) + "-" + str(post_user);
-    fs = FileSystemStorage()
-    filename = fs.save(newNameFile, mediaFile)
-    uploaded_file_url = fs.url(filename)
-    photo = uploaded_file_url;
-    description = request.POST[ 'description' ];
-    newPost = Post( photo = photo, description = description, user_id = curr_user );
-    newPost.save();
-    media_user = Post.objects.filter( user_id = curr_user.id );
-    context = { 'curr_user' : curr_user, 'media_user' : media_user }
-    return render(request, 'instagram/profile.html', context)
+    if request.method == 'POST':
+        post_user = Post.objects.filter(user_id=curr_user.id).count();
+        mediaFile = request.FILES[ 'photo' ];
+        newNameFile = curr_user.username + "-" + str(curr_user.id) + "-" + str(post_user);
+        fs = FileSystemStorage()
+        filename = fs.save(newNameFile, mediaFile)
+        uploaded_file_url = fs.url(filename)
+        photo = uploaded_file_url;
+        description = request.POST[ 'description' ];
+        newPost = Post( photo = photo, description = description, user_id = curr_user );
+        newPost.save();
+        return redirect('profile',curr_user.username)
+    else:
+        context = { 'curr_user' : curr_user }
+        return render(request, 'instagram/uploadPhoto.html', context)
 
 @login_required
 def search( request ):
@@ -86,8 +78,9 @@ def search( request ):
         context = { 'curr_user' : curr_user }
         return render(request, 'instagram/search.html', context)
 
+@login_required
 def follow( request, _username ):
     to = User.objects.get(username=_username);
     fo = Follow.objects.create( from_id = request.user.myuser, to_id = to.myuser )
     request.user.myuser.follow = fo;
-    return redirect(request, 'index')
+    return redirect('profile',to.username)

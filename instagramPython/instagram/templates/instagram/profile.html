@@ -23,13 +23,13 @@
         <ul class="nav nav-pills nav-justified">
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'mainPage' %}">home</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'search' %}">search</a></li>
-          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'uploadPhoto' %}">photo_camera</a></li>
+          <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'uploadFile' %}">photo_camera</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link"  href="#">favorite</a></li>
           <li  class="nav-item material-icons active"><a class="nav-link" href="{% url 'profile' register_user.username%}">account_circle</a></li>
         </ul>
         <section class="profile">
             <section class="imagen">
-                <picture><img src="{{ curr_user.myuser.photo|default_if_none:"/static/instagram/media/default" }}" class ="img-profile"/></picture>
+                <picture><img src="{{ curr_user.myuser.photo|default_if_none:"/static/instagram/media/profile/default" }}" class ="img-profile"/></picture>
             </section>
             <section class="info">
                 <section class="username">

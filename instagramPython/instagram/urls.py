@@ -10,7 +10,6 @@ urlpatterns = [
     url(r'^createUser', views.createUser),
     url(r'^mainPage/$', views.mainPage, name = 'mainPage'),
     url(r'^profile/(?P<_username>[\w-]+)/$', views.profile, name = 'profile'),
-    url(r'^uploadPhoto/$', views.uploadPhoto, name = 'uploadPhoto'),
     url(r'^uploadFile/$', views.uploadFile, name = 'uploadFile'),
     url(r'^search/$', views.search, name = 'search'),
     url(r'^follow/(?P<_username>[\w-]+)/$', views.follow, name = 'follow'),
