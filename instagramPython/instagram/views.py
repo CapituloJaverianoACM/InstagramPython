@@ -2,24 +2,31 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect
 from instagram.models import *
+from instagram.forms import *
 from django.core.files.storage import FileSystemStorage
 
 def index(request):
-    if request.user.is_authenticated:
-        return redirect('mainPage')
-    return render(request, 'instagram/index.html')
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            curr_email = form.cleaned_data['email']
+            curr_name = form.cleaned_data['name']
+            curr_username = form.cleaned_data['username']
+            curr_password = form.cleaned_data['password']
+            user_object = User.objects.create_user(first_name=curr_name, username = curr_username, password = curr_password, email = curr_email)
+            myuser = MyUser( user = user_object )
+            myuser.save()
+            return redirect('login')
+        else:
+            context = {'form':form}
+            return render(request, 'instagram/index.html', context)
+    else:
+        if request.user.is_authenticated:
+            return redirect('mainPage')
+        form = UserForm()
+        context = {'form':form}
+        return render(request, 'instagram/index.html', context)
 
-def createUser(request):
-    curr_email = request.POST['email']
-    curr_name = request.POST['name']
-    curr_nickName = request.POST['nickName']
-    curr_password = request.POST['password']
-    myuser_object = MyUser()
-    user_object = User.objects.create_user(first_name=curr_name, username = curr_nickName, password = curr_password, email = curr_email)
-    myuser = MyUser( user = user_object )
-    myuser.save()
-    user_object.save()
-    return redirect('login')
 
 @login_required
 def mainPage(request):
@@ -48,19 +55,25 @@ def profile(request, _username):
 def uploadFile(request):
     curr_user = request.user
     if request.method == 'POST':
-        post_user = Post.objects.filter(user_id=curr_user.id).count();
-        mediaFile = request.FILES[ 'photo' ];
-        newNameFile = curr_user.username + "-" + str(curr_user.id) + "-" + str(post_user);
-        fs = FileSystemStorage()
-        filename = fs.save(newNameFile, mediaFile)
-        uploaded_file_url = fs.url(filename)
-        photo = uploaded_file_url;
-        description = request.POST[ 'description' ];
-        newPost = Post( photo = photo, description = description, user_id = curr_user );
-        newPost.save();
-        return redirect('profile',curr_user.username)
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post_user = Post.objects.filter(user_id=curr_user.id).count();
+            mediaFile = form.cleaned_data[ 'photo' ];
+            newNameFile = curr_user.username + "-" + str(curr_user.id) + "-" + str(post_user);
+            fs = FileSystemStorage()
+            filename = fs.save(newNameFile, mediaFile)
+            uploaded_file_url = fs.url(filename)
+            photo = uploaded_file_url;
+            description = form.cleaned_data[ 'description' ];
+            newPost = Post( photo = photo, description = description, user_id = curr_user );
+            newPost.save();
+            return redirect('profile',curr_user.username)
+        else:
+            context = { 'curr_user' : curr_user, 'form' : form }
+            return render(request, 'instagram/uploadPhoto.html', context)
     else:
-        context = { 'curr_user' : curr_user }
+        form = PostForm()
+        context = { 'curr_user' : curr_user, 'form' : form }
         return render(request, 'instagram/uploadPhoto.html', context)
 
 @login_required

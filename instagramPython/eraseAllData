@@ -1,0 +1,6 @@
+python manage.py migrate admin zero
+python manage.py migrate auth zero
+python manage.py migrate contenttypes zero
+python manage.py migrate instagram zero
+python manage.py migrate sessions zero
+rm instagram/static/instagram/media/*

@@ -39,26 +39,26 @@
                       <!--<button class="btn dots">•••</button>-->
                       <a class="btn dots" href="{% url 'logout' %}">•••</a>
                     {% else %}
-                    <a class="btn" href="{% url 'follow' curr_user.username %}" >Seguir</a>
+                      <a class="btn" href="{% url 'follow' curr_user.username %}" >Seguir</a>
                     {% endif %}
                 </section>
                 <section class="follow_Info">
                     <section class="follower_Info">
-                        <p>{{ media_user|length }} publicaciones </p>
+                      <p>{{ media_user|length }} publicaciones </p>
                     </section>
                     <section class="follower_Info">
-                        <p>{{followers_number}} seguidores</p>
+                      <p>{{followers_number}} seguidores</p>
                     </section>
                     <section class="follower_Info">
-                        <p>{{follow_number}} seguidos</p>
+                      <p>{{follow_number}} seguidos</p>
                     </section>
                 </section>
                 <section class="profile_details">
                     <section class="profile_name">
-                        <p>{{ curr_user.first_name }}</p>
+                      <p>{{ curr_user.first_name }}</p>
                     </section>
-                   <section class="profile_description">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis autem inventore illum, nisi natus aut.</p>
+                    <section class="profile_description">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis autem inventore illum, nisi natus aut.</p>
                     </section>
                 </section>
             </section>

@@ -22,11 +22,15 @@
                     {% csrf_token %}
                      <div class= "text-center">
                         <div class="form-group">
-                            <input type='text' class="form-control" name='username' id='nickName' placeholder='Username'required>
+                            <input type='text' class="form-control" name='username' id='nickName' placeholder='Nombre de Usuario'required>
                         </div>
                         <div class="form-group">
-                            <input type='password' class="form-control" name='password' id='password' placeholder='Password'required>
+                            <input type='password' class="form-control" name='password' id='password' placeholder='Contraseña'required>
                         </div>
+                        {% if form.errors %}
+                          <p>Tu usuario y/o contraseña no son correctos.</p>
+                          <p>Por favor intenta de nuevo.</p>
+                        {% endif %}
                         <button class="btn btn-primary">Login</button>
                     </div>
                 </form>

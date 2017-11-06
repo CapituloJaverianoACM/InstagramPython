@@ -7,7 +7,6 @@ urlpatterns = [
     url(r'^$', views.index, name = 'index'),
     url(r'^login/$', auth_views.LoginView.as_view(template_name='instagram/login.html',redirect_authenticated_user=True), name= 'login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name='instagram/index.html'), name= 'logout'),
-    url(r'^createUser', views.createUser),
     url(r'^mainPage/$', views.mainPage, name = 'mainPage'),
     url(r'^profile/(?P<_username>[\w-]+)/$', views.profile, name = 'profile'),
     url(r'^uploadFile/$', views.uploadFile, name = 'uploadFile'),

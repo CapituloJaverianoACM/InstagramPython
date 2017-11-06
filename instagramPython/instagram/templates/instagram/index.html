@@ -22,21 +22,25 @@
               <div class="card-block">
                 <h4 class="card-title text-center">Instagram</h4>
                 <h6 class="card-subtitle mb-2 text-muted text-center">Regístrate para ver fotos y vídeos de tus amigos.</h6>
-                <form action='createUser' method='POST'>
+                <form action='{% url 'index' %}' method='POST'>
                     {% csrf_token %}
                     <div class= "text-center">
                         <div class="form-group">
-                            <input type='text' class="form-control" name='email' id='email' placeholder='Correo Electrónico' requrired>
+                            {{ form.email }}
                         </div>
                         <div class="form-group">
-                            <input type='text' class="form-control" name='name' id='name' placeholder='Nombre Completo' required>
+                            {{ form.name }}
                         </div>
                         <div class="form-group">
-                            <input type='text' class="form-control" name='nickName' id='nickName' placeholder='Nombre de Usuario' required>
+                            {{ form.username }}
                         </div>
                         <div class="form-group">
-                            <input type='password' class="form-control" name='password' id='password' placeholder='Contraseña' required>
+                            {{ form.password }}
                         </div>
+                        {{ form.email.errors }}
+                        {{ form.name.errors }}
+                        {{ form.username.errors }}
+                        {{ form.password.errors }}
                         <button class="btn btn-primary">Registrarte</button>
                     </div>
                 </form>
