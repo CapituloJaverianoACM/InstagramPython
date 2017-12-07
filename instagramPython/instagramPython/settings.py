@@ -127,10 +127,10 @@ PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
 #Archivos multimedia.
-MEDIA_ROOT = os.path.join(BASE_DIR, 'instagram/static/instagram/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'instagram/static/media')
 MEDIA_URL = '/media/'
 
 #Auth config
 LOGIN_URL = 'index'
-LOGIN_REDIRECT_URL = 'mainPage'
+LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'index'

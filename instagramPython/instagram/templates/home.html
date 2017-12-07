@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Instagram card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+  </head>
+  <body>
+    <nav class="navbar">
+      <section class="logo-section">
+        <a href="{% url 'home' %}"><img class="logo" src="https://seeklogo.com/images/I/instagram-new-2016-glyph-logo-84CB825424-seeklogo.com.png"/></a>
+        <a href="{% url 'home' %}"><img class="logoname" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2000px-Instagram_logo.svg.png"/></a>
+      </section>
+      <form class="search-section" action="{% url 'search' %}" method='POST'>
+        {% csrf_token %}
+        <input class="input-search" type="search" name="search" placeholder="Buscar"/>
+      </form>
+      <section class="icons-section">
+        <a class="fa fa-upload" href="{% url 'uploadFile' %}"></a>
+        <a class="fa fa-heart-o" href="#"></a>
+        <a class="fa fa-user-o" href="{% url 'profile' curr_user.username %}"></a>
+      </section>
+    </nav>
+    {% if photo_list %}
+      {% for photo in photo_list %}
+        <section class='photo_container'>
+          <section class='photo_header'>
+            <img src="{{ photo.owner_user.myuser.photo|default_if_none:"/static/media/profile/default" }}" class='photo_user'>
+            <a class='photo_username' href="{% url 'profile' photo.owner_user.username %}">{{ photo.owner_user.username }}</a>
+          </section>
+          <section class='photo_image'>
+            <img src='{% static '' %}{{photo.photo}}'>
+          </section>
+          <section class='photo_icons'>
+            <i class="acm-heart-empty"></i>
+            <i class="acm-comment"></i>
+          </section>
+          <h5 class='photo_likes'><span>43,294</span> Me gusta</h5>
+          <section class='photo_comments'>
+            <section class='photo_comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui distinctio in nobis.</section>
+            <section class='photo_comment'>Lorem ipsum dolor sit amet consectetur.</section>
+            <section class='photo_comment'>Lorem ipsum dolor sit amet</section>
+            <section class='photo_comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</section>
+          </section>
+          <section class='photo_add_comment'>
+            <input placeholder='Agrega un comentario...'>
+            <i class='acm-dots'></i>
+          </section>
+        </section>
+      {% endfor %}
+    {% endif %}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+  </body>
+
+</html>

@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Instagram profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+  <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <section class="logo-section">
+      <a href="{% url 'home' %}"><img class="logo" src="https://seeklogo.com/images/I/instagram-new-2016-glyph-logo-84CB825424-seeklogo.com.png"/></a>
+      <a href="{% url 'home' %}"><img class="logoname" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2000px-Instagram_logo.svg.png"/></a>
+    </section>
+    <form class="search-section" action="{% url 'search' %}" method='POST'>
+      {% csrf_token %}
+      <input class="input-search" type="search" name="search" placeholder="Buscar"/>
+    </form>
+    <section class="icons-section">
+      <a class="fa fa-upload" href="{% url 'uploadFile' %}"></a>
+      <a class="fa fa-heart-o" href="#"></a>
+      <a class="fa fa-user-o" href="{% url 'profile' register_user.username %}"></a>
+    </section>
+  </nav>
+  <section class="insta">
+    <section class="insta-header">
+      <img class="insta-photo-profile" src="{{ curr_user.myuser.photo|default_if_none:"/static/media/profile/default" }}"/>
+      <section class="insta-header-data">
+        <section class="insta-info">
+          <h1 class="insta-username">{{ curr_user.username }}</h1>
+            {% if curr_user.username == register_user.username %}
+              <button class="btn">Editar perfil</button>
+            {% elif already_follow == False %}
+              <button class="insta-follow-button"><a class="" href="{% url 'follow' curr_user.username %}" >Seguir</a></button>
+            {% else %}
+              <button class="insta-follow-button"><a class="" href="{% url 'unfollow' curr_user.username %}" >Dejar de seguir</a></button>
+            {% endif %}
+              <a class="insta-options fa fa-ellipsis-h" href="{% url 'logout' %}"></a>
+        </section>
+        <section class="insta-follows">
+          <p><span class="insta-indicator">{{ media_user|length }}</span>publicaciones</p>
+          <p><span class="insta-indicator">{{ followers_number }}</span>seguidores</p>
+          <p><span class="insta-indicator">{{ follow_number }}</span>seguidos</p>
+        </section>
+        <section class="insta-description">{{ curr_user.myuser.estado|default_if_none:"" }}</section>
+      </section>
+    </section>
+    <section class="insta-gallery">
+      {% if media_user %}
+        {% for curr_post in media_user %}
+          <section class="insta-picture-container"><img class="insta-picture" src=" {% static '' %}{{curr_post.photo}} "/>
+            <section class="insta-picture-data"><span><i class="fa fa-heart-o"></i><span>12k</span></span><span><i class="fa fa-comment"></i><span>123k</span></span></section>
+          </section>
+        {% endfor %}
+      {% else %}
+        No tienes publicaciones :(
+      {% endif %}
+    </section>
+  </section>
+
+</body>
+
+</html>

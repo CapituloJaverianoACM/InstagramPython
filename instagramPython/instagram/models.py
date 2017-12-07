@@ -10,19 +10,20 @@ class MyUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     photo = models.CharField(max_length=100, null = True)
     follow_table = models.ManyToManyField("self",through='Follow', symmetrical=False)
+    estado = models.CharField(max_length=300, null = True)
     def __str__(self):
         return self.user.username
 
 class Follow( models.Model ):
-    from_id = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='%(class)s_from_id' )
-    to_id = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='%(class)s_to_id' )
+    from_user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='%(class)s_from_id' )
+    to_user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='%(class)s_to_id' )
 
 class Post(models.Model):
     photo = models.CharField(max_length=100, null = True)
     video = models.CharField(max_length=100, null = True)
     time = models.DateTimeField(default=datetime.now)
     description = models.CharField(max_length=100, null = True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner_user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Comment(models.Model):
     text = models.CharField(max_length=100)

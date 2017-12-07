@@ -10,38 +10,28 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
         <!-- CSS ACM -->
-        <link rel="stylesheet" type="text/css" href="{% static 'instagram/css/general.css' %}" >
-        <link rel="stylesheet" type="text/css" href="{% static 'instagram/css/index.css' %}" >
+        <link rel="stylesheet" type="text/css" href="{% static 'css/general.css' %}" >
 
-        <!-- Material Icon -->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
         <center>
             <div class="card" style="width: 20rem;">
               <div class="card-block">
                 <h4 class="card-title text-center">Instagram</h4>
-                <h6 class="card-subtitle mb-2 text-muted text-center">Regístrate para ver fotos y vídeos de tus amigos.</h6>
-                <form action='{% url 'index' %}' method='POST'>
+                <form method='POST' action="{% url 'login' %}" >
                     {% csrf_token %}
-                    <div class= "text-center">
+                     <div class= "text-center">
                         <div class="form-group">
-                            {{ form.email }}
+                            <input type='text' class="form-control" name='username' id='nickName' placeholder='Nombre de Usuario'required>
                         </div>
                         <div class="form-group">
-                            {{ form.name }}
+                            <input type='password' class="form-control" name='password' id='password' placeholder='Contraseña'required>
                         </div>
-                        <div class="form-group">
-                            {{ form.username }}
-                        </div>
-                        <div class="form-group">
-                            {{ form.password }}
-                        </div>
-                        {{ form.email.errors }}
-                        {{ form.name.errors }}
-                        {{ form.username.errors }}
-                        {{ form.password.errors }}
-                        <button class="btn btn-primary">Registrarte</button>
+                        {% if form.errors %}
+                          <p>Tu usuario y/o contraseña no son correctos.</p>
+                          <p>Por favor intenta de nuevo.</p>
+                        {% endif %}
+                        <button class="btn btn-primary">Login</button>
                     </div>
                 </form>
               </div>
@@ -49,7 +39,7 @@
             <br>
             <div class="card" style="width: 20rem;">
               <div class="card-block">
-                ¿Tienes una cuenta? <a href="{% url 'login' %}" class="card-link"> Entrar</a>
+                  ¿No tienes una cuenta? <a href="{% url 'index' %}" class="card-link"> Regístrate</a>
               </div>
             </div>
         </center>

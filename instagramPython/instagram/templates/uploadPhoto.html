@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- CSS ACM -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/general.css' %}" >
+
+    <title>Instagram</title>
+  </head>
+  <body>
+    <nav class="navbar">
+      <section class="logo-section">
+        <a href="{% url 'home' %}"><img class="logo" src="https://seeklogo.com/images/I/instagram-new-2016-glyph-logo-84CB825424-seeklogo.com.png"/></a>
+        <a href="{% url 'home' %}"><img class="logoname" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2000px-Instagram_logo.svg.png"/></a>
+      </section>
+      <form class="search-section" action="{% url 'search' %}" method='POST'>
+        {% csrf_token %}
+        <input class="input-search" type="search" name="search" placeholder="Buscar"/>
+      </form>
+      <section class="icons-section">
+        <a class="fa fa-upload" href="{% url 'uploadFile' %}"></a>
+        <a class="fa fa-heart-o" href="#"></a>
+        <a class="fa fa-user-o" href="{% url 'profile' curr_user.username %}"></a>
+      </section>
+    </nav>
+    <br>
+    <center>
+      <div class="card" style="width: 50rem;">
+        <div class="card-block">
+          <h4 class="card-title text-center">Sube una foto</h4>
+          <form action="{% url 'uploadFile' %}" method='POST' enctype="multipart/form-data" >
+            {% csrf_token %}
+            <div class= "text-center">
+              <div class="form-group">
+                {{ form.photo.errors }}
+                {{ form.photo }}
+                <img id="preview" style="width: 50%;"/>
+              </div>
+              <div class="form-group">
+                {{ form.description.errors }}
+                {{ form.description }}
+              </div>
+              <button class="btn btn-primary">Subir Foto</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </center>
+
+    <!-- JS Bootstrap v4 -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+    <!-- JS ACM -->
+    <script src="{% static 'js/previewPhoto.js' %}"></script>
+  </body>
+</html>
