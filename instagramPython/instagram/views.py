@@ -37,10 +37,15 @@ def home(request):
         post_aux = Post.objects.filter(owner_user=search_user.user.id)
         if post_aux:
             for photo_aux in post_aux:
+                print ("Photo con id:" + str(photo_aux.pk) )
+                print (photo_aux.like_set.count())
                 photo_list.append( photo_aux )
     for post_aux in Post.objects.filter(owner_user = curr_user):
         photo_list.append(post_aux)
-    context = { 'curr_user' : curr_user, 'photo_list' : photo_list }
+    likes = []
+    for like in Like.objects.filter(user = curr_user):
+        likes.append(like.post.pk)
+    context = { 'curr_user' : curr_user, 'photo_list' : photo_list, 'likes' : likes }
     return render(request, 'home.html', context)
 
 @login_required
@@ -117,3 +122,26 @@ def unfollow(request, _username):
     row = Follow.objects.filter( from_user = request.user.myuser, to_user = to.myuser )
     row.delete()
     return redirect('profile', to.username)
+
+def doLike(request, id_photo):
+    curr_user = request.user
+    post = Post.objects.get(pk = id_photo)
+    if not Like.objects.filter(user = curr_user, post = post).exists():
+        new_like = Like(user = curr_user, post = post)
+        new_like.save()
+    return redirect('home')
+
+def removeLike(request, id_photo):
+    curr_user = request.user
+    post = Post.objects.get(pk = id_photo)
+    if Like.objects.filter(user = curr_user, post = post).exists():
+        Like.objects.filter(user = curr_user, post = post).delete()
+    return redirect('home')
+
+def doComment(request, id_photo):
+    comment = request.POST['comment']
+    curr_user = request.user
+    post = Post.objects.get(pk = id_photo)
+    new_comment = Comment(text = comment, user = curr_user, post = post)
+    new_comment.save()
+    return redirect('home')

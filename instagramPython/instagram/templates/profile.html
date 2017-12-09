@@ -55,7 +55,7 @@
       {% if media_user %}
         {% for curr_post in media_user %}
           <section class="insta-picture-container"><img class="insta-picture" src=" {% static '' %}{{curr_post.photo}} "/>
-            <section class="insta-picture-data"><span><i class="fa fa-heart-o"></i><span>12k</span></span><span><i class="fa fa-comment"></i><span>123k</span></span></section>
+            <section class="insta-picture-data"><span><i class="fa fa-heart-o"></i><span>{{curr_post.like_set.count}}</span></span><span><i class="fa fa-comment"></i><span>{{curr_post.comment_set.count}}</span></span></section>
           </section>
         {% endfor %}
       {% else %}
