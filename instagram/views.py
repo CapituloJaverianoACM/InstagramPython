@@ -77,7 +77,7 @@ def uploadFile(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            post_user = Post.objects.filter(user=curr_user.id).count();
+            post_user = Post.objects.filter(owner_user=curr_user.id).count();
             mediaFile = form.cleaned_data[ 'photo' ];
             newNameFile = curr_user.username + "-" + str(curr_user.id) + "-" + str(post_user);
             fs = FileSystemStorage()
